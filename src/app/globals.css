@@ -5,8 +5,8 @@
     "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
     "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
+  --foreground-rgb: 33, 37, 41;
+  --background-start-rgb: 248, 249, 250;
   --background-end-rgb: 255, 255, 255;
 
   --primary-glow: conic-gradient(
@@ -36,15 +36,15 @@
 
   --callout-rgb: 238, 240, 241;
   --callout-border-rgb: 172, 175, 176;
-  --card-rgb: 180, 185, 188;
-  --card-border-rgb: 131, 134, 135;
+  --card-rgb: 255, 255, 255;
+  --card-border-rgb: 221, 221, 221;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-rgb: 248, 249, 250;
+    --background-start-rgb: 33, 37, 41;
+    --background-end-rgb: 52, 58, 64;
 
     --primary-glow: radial-gradient(rgba(1, 65, 255, 0.4), rgba(1, 65, 255, 0));
     --secondary-glow: linear-gradient(
@@ -54,8 +54,8 @@
       rgba(1, 65, 255, 0.3)
     );
 
-    --tile-start-rgb: 2, 13, 46;
-    --tile-end-rgb: 2, 5, 19;
+    --tile-start-rgb: 52, 58, 64;
+    --tile-end-rgb: 33, 37, 41;
     --tile-border: conic-gradient(
       #ffffff80,
       #ffffff40,
@@ -66,9 +66,9 @@
       #ffffff80
     );
 
-    --callout-rgb: 20, 20, 20;
+    --callout-rgb: 44, 44, 44;
     --callout-border-rgb: 108, 108, 108;
-    --card-rgb: 100, 100, 100;
+    --card-rgb: 60, 60, 60;
     --card-border-rgb: 200, 200, 200;
   }
 }
@@ -77,15 +77,15 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
 }
 
 html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-}
-
-body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -93,6 +93,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  line-height: 1.6;
 }
 
 a {
@@ -100,8 +101,59 @@ a {
   text-decoration: none;
 }
 
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: #0070f3;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background-color: #005bb5;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #0070f3;
+}
+
+form {
+  display: flex;
+  gap: 10px;
 }

@@ -1,95 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import Head from "next/head";
+import { useState, useEffect } from "react";
+import Sidebar from "@/comps/sideBar";
+import Chat from "@/comps/chat/index";
 
 export default function Home() {
+  const [conversations, setConversations] = useState({});
+  const [currentConversation, setCurrentConversation] = useState("");
+
+  useEffect(() => {
+    const savedConversations =
+      JSON.parse(localStorage.getItem("conversations")) || {};
+    if (!savedConversations["Conversation 1"]) {
+      savedConversations["Conversation 1"] = [];
+      localStorage.setItem("conversations", JSON.stringify(savedConversations));
+    }
+    setConversations(savedConversations);
+    setCurrentConversation(
+      Object.keys(savedConversations)[0] || "Conversation 1"
+    );
+  }, []);
+
+  const addConversation = () => {
+    const newConversationName = `Conversation ${
+      Object.keys(conversations).length + 1
+    }`;
+    const newConversations = { ...conversations, [newConversationName]: [] };
+    setConversations(newConversations);
+    localStorage.setItem("conversations", JSON.stringify(newConversations));
+    setCurrentConversation(newConversationName);
+  };
+
+  const deleteConversation = (name) => {
+    const { [name]: _, ...remainingConversations } = conversations;
+    setConversations(remainingConversations);
+    localStorage.setItem(
+      "conversations",
+      JSON.stringify(remainingConversations)
+    );
+    localStorage.removeItem(name);
+
+    const nextConversation = Object.keys(remainingConversations)[0] || "";
+    setCurrentConversation(nextConversation);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+      <Head>
+        <title>ChatGPT Parrot</title>
+        <meta name="description" content="A simple ChatGPT-like parrot app" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div style={{ display: "flex", flex: 1 }}>
+        <Sidebar
+          conversations={conversations}
+          currentConversation={currentConversation}
+          setCurrentConversation={setCurrentConversation}
+          addConversation={addConversation}
+          deleteConversation={deleteConversation}
         />
+        <main
+          style={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "stretch",
+          }}
+        >
+          {currentConversation && (
+            <Chat currentConversation={currentConversation} />
+          )}
+        </main>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }

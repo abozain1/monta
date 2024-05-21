@@ -1,0 +1,101 @@
+.sidebarContainer {
+  width: 250px;
+  padding: 20px;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarContainer h2 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.sidebarContainer ul {
+  list-style: none;
+  padding: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.sidebarContainer li {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebarContainer span {
+  cursor: pointer;
+  color: white;
+  flex-grow: 1;
+}
+
+.sidebarContainer span.active {
+  color: #0070f3;
+}
+
+.delete {
+  margin-left: 10px;
+  background-color: transparent;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+
+.addConversationButton {
+  padding: 10px 20px;
+  background-color: #0070f3;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.addConversationButton:hover {
+  background-color: #005bb5;
+}
+
+@media (max-width: 768px) {
+  .sidebarContainer {
+    width: 200px;
+    padding: 10px;
+  }
+
+  .sidebarContainer h2 {
+    font-size: 1.1em;
+  }
+
+  .addConversationButton {
+    padding: 10px;
+  }
+
+  .sidebarContainer span,
+  .sidebarContainer button {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebarContainer {
+    width: 100%;
+    padding: 10px;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .sidebarContainer h2 {
+    font-size: 1em;
+  }
+
+  .addConversationButton {
+    padding: 10px;
+  }
+
+  .sidebarContainer span,
+  .sidebarContainer button {
+    font-size: 0.8em;
+  }
+}
